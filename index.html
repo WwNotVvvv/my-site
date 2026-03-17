@@ -80,6 +80,7 @@
       position: sticky;
       top: 18px;
       z-index: 20;
+      transition: padding 220ms ease, transform 220ms ease, gap 220ms ease, box-shadow 220ms ease, border-radius 220ms ease;
     }
 
     .brand, .nav-links, .hero-actions, .hero-badges, .pill-row, .toolbar, .step-controls, .mini-guide, .code-playground-controls {
@@ -590,6 +591,14 @@
       border: 1px solid var(--line);
     }
 
+    .reading-step:nth-child(odd) {
+      background: rgba(255, 255, 255, 0.34);
+    }
+
+    .reading-step:nth-child(even) {
+      background: rgba(15, 118, 110, 0.08);
+    }
+
     .reading-step strong,
     .code-note strong,
     .lab-card strong {
@@ -692,6 +701,17 @@
       margin-top: 12px;
     }
 
+    .button-feedback-box,
+    .shadow-observer {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.28);
+      color: var(--muted);
+      min-height: 48px;
+    }
+
     .lesson-button {
       border: none;
       cursor: pointer;
@@ -745,12 +765,19 @@
       border-radius: 22px;
       background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.26));
       border: 1px solid var(--line);
-      transition: box-shadow 220ms ease, transform 220ms ease;
+      transition: box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
     }
 
     .shadow-sample.soft-shadow { box-shadow: 0 10px 22px rgba(54, 43, 20, 0.08); }
-    .shadow-sample.medium-shadow { box-shadow: 0 18px 34px rgba(54, 43, 20, 0.14); }
-    .shadow-sample.strong-shadow { box-shadow: 0 28px 50px rgba(54, 43, 20, 0.22); }
+    .shadow-sample.medium-shadow {
+      box-shadow: 0 22px 42px rgba(54, 43, 20, 0.18);
+      transform: translateY(-3px);
+    }
+    .shadow-sample.strong-shadow {
+      box-shadow: 0 34px 66px rgba(54, 43, 20, 0.28);
+      transform: translateY(-7px) scale(1.01);
+      border-color: rgba(214, 97, 59, 0.28);
+    }
 
     .selector-output {
       margin-top: 14px;
@@ -760,6 +787,61 @@
       color: var(--accent);
       font-weight: 600;
       min-height: 48px;
+    }
+
+    .selector-stage {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .selector-item {
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.3);
+      color: var(--muted);
+      transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .selector-stage.mode-p .selector-item {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--accent);
+      border-color: rgba(15, 118, 110, 0.18);
+    }
+
+    .selector-stage.mode-highlight .selector-item.highlight-target {
+      background: rgba(214, 97, 59, 0.12);
+      color: var(--primary-dark);
+      border-color: rgba(214, 97, 59, 0.22);
+      transform: translateX(4px);
+      box-shadow: 0 10px 22px rgba(214, 97, 59, 0.12);
+    }
+
+    .selector-stage.mode-highlight .selector-item:not(.highlight-target) {
+      opacity: 0.72;
+    }
+
+    .topbar.is-condensed {
+      padding: 10px 14px;
+      gap: 12px;
+      border-radius: 22px;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
+    }
+
+    .topbar.is-condensed .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .topbar.is-condensed .brand h1 {
+      font-size: 1rem;
+    }
+
+    .topbar.is-condensed .brand p {
+      display: none;
     }
 
     .reveal {
@@ -784,12 +866,52 @@
         padding-top: 16px;
       }
 
-      .topbar, .section-head, .footer, .hero-actions, .toolbar, .step-controls {
+      .section-head, .footer, .hero-actions, .toolbar, .step-controls {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .topbar, .section-head, .footer { border-radius: 24px; }
+      .topbar {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 22px;
+      }
+
+      .topbar .brand {
+        min-width: 0;
+        flex: 0 0 auto;
+      }
+
+      .topbar .brand h1 {
+        font-size: 1rem;
+      }
+
+      .topbar .brand p {
+        display: none;
+      }
+
+      .nav-links {
+        flex: 1 1 auto;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 2px;
+        scrollbar-width: none;
+      }
+
+      .nav-links::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-links a {
+        white-space: nowrap;
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .section-head, .footer { border-radius: 24px; }
 
       .hero-card, .lesson-card, .demo-panel, .code-card, .showcase-card, .timeline-card, .status-card, .metric {
         padding: 22px;
@@ -1264,12 +1386,13 @@
           </div>
           <div class="demo-surface button-demo-card">
             <h5>实时演示效果</h5>
-            <p>下面展示三种常用按钮风格，适合做主按钮、次按钮和弱化操作。</p>
+            <p>下面展示三种常用按钮风格，点击它们后会看到不同的反馈文案。</p>
             <div class="demo-button-row">
-              <button class="lesson-button primary" type="button">主按钮</button>
-              <button class="lesson-button soft" type="button">柔和按钮</button>
-              <button class="lesson-button ghost" type="button">描边按钮</button>
+              <button class="lesson-button primary lab-button-trigger" data-feedback="主按钮适合承载页面中最重要的操作，比如“提交”或“开始学习”。" type="button">主按钮</button>
+              <button class="lesson-button soft lab-button-trigger" data-feedback="柔和按钮适合次一级操作，它更友好，不会抢走页面重点。" type="button">柔和按钮</button>
+              <button class="lesson-button ghost lab-button-trigger" data-feedback="描边按钮适合辅助操作，例如“稍后再说”或“查看更多”。" type="button">描边按钮</button>
             </div>
+            <div class="button-feedback-box" id="buttonFeedback" aria-live="polite">点击任意按钮，观察不同按钮风格在语义上的区别。</div>
           </div>
         </article>
 
@@ -1291,7 +1414,7 @@
           </div>
           <div class="demo-surface shadow-demo-card">
             <h5>实时演示效果</h5>
-            <p>切换不同阴影强度，感受界面层级如何变化。</p>
+            <p>切换不同阴影强度后，重点观察卡片是否更“浮起来”、更像页面的视觉焦点。</p>
             <div class="segmented">
               <button class="shadow-switch active" data-shadow="soft-shadow" type="button">轻阴影</button>
               <button class="shadow-switch" data-shadow="medium-shadow" type="button">中阴影</button>
@@ -1301,6 +1424,7 @@
               <h5>示例卡片</h5>
               <p>阴影会影响卡片的重量感、聚焦感和页面节奏。</p>
             </div>
+            <div class="shadow-observer" id="shadowObserver">当前是轻阴影：卡片比较贴近背景，层级感较弱，适合普通信息块。</div>
           </div>
         </article>
 
@@ -1324,10 +1448,15 @@
           </div>
           <div class="demo-surface selector-demo">
             <h5>实时演示效果</h5>
-            <p>点击下面按钮，观察“被选中的元素”如何变化。</p>
+            <p>点击下面按钮，观察“哪些内容被选中并高亮”发生了怎样的变化。</p>
             <div class="code-playground-controls">
               <button class="lesson-button soft selector-trigger" data-message="当前选中的是所有段落 p，因此说明文字会统一变成一类样式。" type="button">选择 `p`</button>
               <button class="lesson-button primary selector-trigger" data-message="当前选中的是 .highlight，只有带这个 class 的元素会被特别强调。" type="button">选择 `.highlight`</button>
+            </div>
+            <div class="selector-stage" id="selectorStage">
+              <div class="selector-item">我是普通段落 A</div>
+              <div class="selector-item highlight-target">我是带有 class="highlight" 的段落</div>
+              <div class="selector-item">我是普通段落 B</div>
             </div>
             <div class="selector-output" id="selectorOutput">当前还没有切换选择器，先点击上面的按钮试试看。</div>
           </div>
@@ -1347,6 +1476,7 @@
     </footer>
   </div>
   <script>
+    const topbar = document.querySelector(".topbar");
     const feedbackButton = document.getElementById("feedbackButton");
     const feedbackText = document.getElementById("feedbackText");
     const expandCard = document.getElementById("expandCard");
@@ -1365,9 +1495,13 @@
     const previewCard = document.getElementById("previewCard");
     const themeToggle = document.getElementById("themeToggle");
     const filterButtons = document.querySelectorAll(".filter-chip");
+    const labButtons = document.querySelectorAll(".lab-button-trigger");
+    const buttonFeedback = document.getElementById("buttonFeedback");
     const shadowButtons = document.querySelectorAll(".shadow-switch");
     const shadowSample = document.getElementById("shadowSample");
+    const shadowObserver = document.getElementById("shadowObserver");
     const selectorTriggers = document.querySelectorAll(".selector-trigger");
+    const selectorStage = document.getElementById("selectorStage");
     const selectorOutput = document.getElementById("selectorOutput");
     const revealElements = document.querySelectorAll(".reveal");
 
@@ -1420,6 +1554,11 @@
       progressText.textContent = progressStages[currentStage].label;
     }
 
+    function updateTopbarState() {
+      const shouldCondense = window.innerWidth <= 760 && window.scrollY > 72;
+      topbar.classList.toggle("is-condensed", shouldCondense);
+    }
+
     feedbackButton.addEventListener("click", () => {
       feedbackText.textContent = "已接收操作，正在模拟提交...";
       clearTimeout(feedbackTimer);
@@ -1462,16 +1601,32 @@
       button.addEventListener("click", () => setPreviewMode(button.dataset.view));
     });
 
+    labButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        buttonFeedback.textContent = button.dataset.feedback;
+      });
+    });
+
     shadowButtons.forEach((button) => {
       button.addEventListener("click", () => {
         shadowSample.classList.remove("soft-shadow", "medium-shadow", "strong-shadow");
         shadowSample.classList.add(button.dataset.shadow);
         shadowButtons.forEach((item) => item.classList.toggle("active", item === button));
+
+        const shadowNotes = {
+          "soft-shadow": "当前是轻阴影：卡片比较贴近背景，层级感较弱，适合普通信息块。",
+          "medium-shadow": "当前是中阴影：卡片开始明显浮起，更适合需要一点点强调的内容。",
+          "strong-shadow": "当前是强阴影：卡片像被抬高了一层，焦点感最强，适合重点展示。"
+        };
+
+        shadowObserver.textContent = shadowNotes[button.dataset.shadow];
       });
     });
 
     selectorTriggers.forEach((button) => {
       button.addEventListener("click", () => {
+        selectorStage.classList.remove("mode-p", "mode-highlight");
+        selectorStage.classList.add(button.textContent.includes(".highlight") ? "mode-highlight" : "mode-p");
         selectorOutput.textContent = button.dataset.message;
       });
     });
@@ -1491,6 +1646,9 @@
     }, { threshold: 0.16 });
 
     revealElements.forEach((element) => observer.observe(element));
+    window.addEventListener("scroll", updateTopbarState, { passive: true });
+    window.addEventListener("resize", updateTopbarState);
+    updateTopbarState();
   </script>
 </body>
 </html>
