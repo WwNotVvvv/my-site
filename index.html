@@ -82,7 +82,7 @@
       z-index: 20;
     }
 
-    .brand, .nav-links, .hero-actions, .hero-badges, .pill-row, .toolbar, .step-controls {
+    .brand, .nav-links, .hero-actions, .hero-badges, .pill-row, .toolbar, .step-controls, .mini-guide, .code-playground-controls {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
@@ -553,6 +553,215 @@
       flex-wrap: wrap;
     }
 
+    .reading-rail {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .reading-card, .lab-card, .code-sample, .demo-surface {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .reading-card, .lab-card {
+      padding: 24px;
+    }
+
+    .mini-guide .chip {
+      background: rgba(214, 97, 59, 0.08);
+      color: var(--primary-dark);
+    }
+
+    .reading-steps {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .reading-step {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid var(--line);
+    }
+
+    .reading-step strong,
+    .code-note strong,
+    .lab-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .reading-step p,
+    .code-note p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .frontend-lab-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .lab-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .code-sample {
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(31, 36, 48, 0.96), rgba(31, 36, 48, 0.88));
+      color: #f4efe6;
+      overflow: auto;
+    }
+
+    .code-sample pre {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+      font-family: Consolas, "Courier New", monospace;
+      white-space: pre-wrap;
+    }
+
+    .code-note {
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .demo-surface {
+      padding: 20px;
+      min-height: 100%;
+    }
+
+    .syntax-preview h5,
+    .button-demo-card h5,
+    .shadow-demo-card h5,
+    .selector-demo h5 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+
+    .syntax-preview p,
+    .button-demo-card p,
+    .shadow-demo-card p,
+    .selector-demo p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .syntax-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+    }
+
+    .syntax-card .tag {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.1);
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .button-demo-card,
+    .shadow-demo-card,
+    .selector-demo {
+      padding: 18px;
+      border-radius: 20px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+    }
+
+    .demo-button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .lesson-button {
+      border: none;
+      cursor: pointer;
+      font: inherit;
+      padding: 12px 16px;
+      border-radius: 14px;
+      transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    }
+
+    .lesson-button.primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(214, 97, 59, 0.22);
+    }
+
+    .lesson-button.soft {
+      background: rgba(15, 118, 110, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(15, 118, 110, 0.2);
+    }
+
+    .lesson-button.ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .lesson-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .segmented {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .segmented button {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.28);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .shadow-sample {
+      padding: 22px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.26));
+      border: 1px solid var(--line);
+      transition: box-shadow 220ms ease, transform 220ms ease;
+    }
+
+    .shadow-sample.soft-shadow { box-shadow: 0 10px 22px rgba(54, 43, 20, 0.08); }
+    .shadow-sample.medium-shadow { box-shadow: 0 18px 34px rgba(54, 43, 20, 0.14); }
+    .shadow-sample.strong-shadow { box-shadow: 0 28px 50px rgba(54, 43, 20, 0.22); }
+
+    .selector-output {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--accent);
+      font-weight: 600;
+      min-height: 48px;
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(18px);
@@ -565,7 +774,7 @@
     }
 
     @media (max-width: 1100px) {
-      .hero, .demo-layout, .lesson-grid, .showcase-grid, .timeline { grid-template-columns: 1fr; }
+      .hero, .demo-layout, .lesson-grid, .showcase-grid, .timeline, .reading-rail, .lab-card { grid-template-columns: 1fr; }
       .metric-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
@@ -605,6 +814,7 @@
         <a href="#demo">交互演示</a>
         <a href="#build">实现方法</a>
         <a href="#roadmap">进阶路径</a>
+        <a href="#frontend-lab">编程教学</a>
       </nav>
     </header>
 
@@ -718,6 +928,60 @@
             <li>动效要服务理解，而不是制造干扰。</li>
             <li>实现时加入键盘可达性、语义标签和对比度意识。</li>
           </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="section-head">
+        <div>
+          <h3>更轻松的阅读方式</h3>
+          <p>你不需要一次看完所有内容，可以按“先体验、再理解、后实现”的顺序学习。</p>
+        </div>
+        <div class="mini-guide">
+          <span class="chip">先看标题</span>
+          <span class="chip">再点演示</span>
+          <span class="chip">最后看代码</span>
+        </div>
+      </div>
+
+      <div class="reading-rail">
+        <article class="reading-card reveal">
+          <h4>给初学者的阅读建议</h4>
+          <p>这页内容比较多，但不需要逐字通读。把它当成“可操作的教材”，每次只学一个点就够了。</p>
+          <div class="reading-steps">
+            <div class="reading-step">
+              <strong>第一步：先看每张卡片的标题</strong>
+              <p>先理解这张卡片在讲什么，不要一开始就陷进所有细节。</p>
+            </div>
+            <div class="reading-step">
+              <strong>第二步：先点击演示，再回来看解释</strong>
+              <p>看到效果以后，再读文字，会更容易把“原则”和“结果”对应起来。</p>
+            </div>
+            <div class="reading-step">
+              <strong>第三步：最后再看实现方法</strong>
+              <p>你只需要先掌握“结构 + 样式 + 交互”三层，就已经能做出不错的页面。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="reading-card reveal">
+          <h4>本页推荐学习路径</h4>
+          <p>如果你是 0 基础，建议按这个节奏来，不容易眼花，也更容易建立前端直觉。</p>
+          <div class="reading-steps">
+            <div class="reading-step">
+              <strong>第 1 轮</strong>
+              <p>只浏览 `教学地图` 和 `交互演示区`，感受什么叫优秀的人机交互设计。</p>
+            </div>
+            <div class="reading-step">
+              <strong>第 2 轮</strong>
+              <p>再看 `如何实现这些设计`，理解 HTML、CSS、JavaScript 各自负责什么。</p>
+            </div>
+            <div class="reading-step">
+              <strong>第 3 轮</strong>
+              <p>继续学习后面的 `编程教学` 版块，开始真正动手写语法、按钮、阴影和选择器。</p>
+            </div>
+          </div>
         </article>
       </div>
     </section>
@@ -937,6 +1201,140 @@
       </div>
     </section>
 
+    <section id="frontend-lab" class="reveal">
+      <div class="section-head">
+        <div>
+          <h3>前端编程教学实验室</h3>
+          <p>这一部分专门面向 0 基础学习者，用“代码 + 演示”的方式带你理解最常用的前端基础。</p>
+        </div>
+        <div class="pill-row">
+          <span class="chip">HTML 语法</span>
+          <span class="chip">按钮样式</span>
+          <span class="chip">阴影与层级</span>
+          <span class="chip">选择器</span>
+        </div>
+      </div>
+
+      <div class="frontend-lab-grid">
+        <article class="lab-card reveal">
+          <div>
+            <h4>01. HTML 语法入门</h4>
+            <p>HTML 可以理解为网页的骨架。标签负责告诉浏览器：哪里是标题，哪里是段落，哪里是按钮。</p>
+            <div class="code-sample">
+              <pre>&lt;section&gt;
+  &lt;h1&gt;我的第一个卡片&lt;/h1&gt;
+  &lt;p&gt;这是对卡片内容的说明。&lt;/p&gt;
+  &lt;button&gt;点我&lt;/button&gt;
+&lt;/section&gt;</pre>
+            </div>
+            <div class="code-note">
+              <strong>你要记住的重点</strong>
+              <p>`&lt;h1&gt;` 是标题，`&lt;p&gt;` 是段落，`&lt;button&gt;` 是按钮。网页先有结构，后有美化。</p>
+            </div>
+          </div>
+          <div class="demo-surface syntax-preview">
+            <h5>实时演示效果</h5>
+            <p>右侧就是上面这段 HTML 在浏览器里的呈现方式。</p>
+            <div class="syntax-card">
+              <span class="tag">HTML 结构</span>
+              <h5>我的第一个卡片</h5>
+              <p>这是对卡片内容的说明。</p>
+              <button class="lesson-button primary" type="button">点我</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="lab-card reveal">
+          <div>
+            <h4>02. 按钮怎么写得更好看</h4>
+            <p>按钮的核心通常来自四部分：背景色、文字颜色、内边距、圆角。再进一步，可以加上悬停和阴影。</p>
+            <div class="code-sample">
+              <pre>button {
+  background: #d6613b;
+  color: white;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 14px;
+}</pre>
+            </div>
+            <div class="code-note">
+              <strong>你要记住的重点</strong>
+              <p>`padding` 决定按钮“厚不厚”，`border-radius` 决定圆润程度，颜色决定情绪和强调关系。</p>
+            </div>
+          </div>
+          <div class="demo-surface button-demo-card">
+            <h5>实时演示效果</h5>
+            <p>下面展示三种常用按钮风格，适合做主按钮、次按钮和弱化操作。</p>
+            <div class="demo-button-row">
+              <button class="lesson-button primary" type="button">主按钮</button>
+              <button class="lesson-button soft" type="button">柔和按钮</button>
+              <button class="lesson-button ghost" type="button">描边按钮</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="lab-card reveal">
+          <div>
+            <h4>03. 阴影为什么能增强高级感</h4>
+            <p>阴影不是为了“炫”，而是为了告诉用户：这个元素悬浮在页面上，有层级、有重点、更值得注意。</p>
+            <div class="code-sample">
+              <pre>.card {
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 18px 34px rgba(0,0,0,0.14);
+}</pre>
+            </div>
+            <div class="code-note">
+              <strong>你要记住的重点</strong>
+              <p>`box-shadow` 数值越大，阴影越扩散；透明度越低，阴影越柔和。轻阴影适合普通卡片，重阴影适合重点内容。</p>
+            </div>
+          </div>
+          <div class="demo-surface shadow-demo-card">
+            <h5>实时演示效果</h5>
+            <p>切换不同阴影强度，感受界面层级如何变化。</p>
+            <div class="segmented">
+              <button class="shadow-switch active" data-shadow="soft-shadow" type="button">轻阴影</button>
+              <button class="shadow-switch" data-shadow="medium-shadow" type="button">中阴影</button>
+              <button class="shadow-switch" data-shadow="strong-shadow" type="button">强阴影</button>
+            </div>
+            <div class="shadow-sample soft-shadow" id="shadowSample">
+              <h5>示例卡片</h5>
+              <p>阴影会影响卡片的重量感、聚焦感和页面节奏。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="lab-card reveal">
+          <div>
+            <h4>04. CSS 选择器怎么理解</h4>
+            <p>选择器就是“我要修改谁”。你写样式之前，先要学会准确选中页面元素。</p>
+            <div class="code-sample">
+              <pre>p {
+  color: #586173;
+}
+
+.highlight {
+  color: #d6613b;
+}</pre>
+            </div>
+            <div class="code-note">
+              <strong>你要记住的重点</strong>
+              <p>`p` 会选中所有段落，`.highlight` 会选中 class 为 `highlight` 的元素。类选择器是做组件样式最常用的方法。</p>
+            </div>
+          </div>
+          <div class="demo-surface selector-demo">
+            <h5>实时演示效果</h5>
+            <p>点击下面按钮，观察“被选中的元素”如何变化。</p>
+            <div class="code-playground-controls">
+              <button class="lesson-button soft selector-trigger" data-message="当前选中的是所有段落 p，因此说明文字会统一变成一类样式。" type="button">选择 `p`</button>
+              <button class="lesson-button primary selector-trigger" data-message="当前选中的是 .highlight，只有带这个 class 的元素会被特别强调。" type="button">选择 `.highlight`</button>
+            </div>
+            <div class="selector-output" id="selectorOutput">当前还没有切换选择器，先点击上面的按钮试试看。</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <footer class="footer reveal">
       <div>
         <strong>页面目标</strong>
@@ -967,6 +1365,10 @@
     const previewCard = document.getElementById("previewCard");
     const themeToggle = document.getElementById("themeToggle");
     const filterButtons = document.querySelectorAll(".filter-chip");
+    const shadowButtons = document.querySelectorAll(".shadow-switch");
+    const shadowSample = document.getElementById("shadowSample");
+    const selectorTriggers = document.querySelectorAll(".selector-trigger");
+    const selectorOutput = document.getElementById("selectorOutput");
     const revealElements = document.querySelectorAll(".reveal");
 
     const progressStages = [
@@ -1022,7 +1424,7 @@
       feedbackText.textContent = "已接收操作，正在模拟提交...";
       clearTimeout(feedbackTimer);
       feedbackTimer = setTimeout(() => {
-        feedbackText.textContent = "骗你的，点击了也是GAY。";
+        feedbackText.textContent = "提交完成，系统已经给出明确反馈。";
       }, 900);
     });
 
@@ -1058,6 +1460,20 @@
 
     filterButtons.forEach((button) => {
       button.addEventListener("click", () => setPreviewMode(button.dataset.view));
+    });
+
+    shadowButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        shadowSample.classList.remove("soft-shadow", "medium-shadow", "strong-shadow");
+        shadowSample.classList.add(button.dataset.shadow);
+        shadowButtons.forEach((item) => item.classList.toggle("active", item === button));
+      });
+    });
+
+    selectorTriggers.forEach((button) => {
+      button.addEventListener("click", () => {
+        selectorOutput.textContent = button.dataset.message;
+      });
     });
 
     themeToggle.addEventListener("click", () => {
