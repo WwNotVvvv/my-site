@@ -1168,7 +1168,7 @@
             <div class="interactive-card">
               <h5>1. 点击反馈示范</h5>
               <p>点击主按钮后，系统立刻给出“动作已被接收”的反馈，而不是让用户猜。</p>
-              <button class="primary-action" id="feedbackButton">点击证明你不是GAY</button>
+              <button class="primary-action" id="feedbackButton">点击提交以证明你不是GAY</button>
               <p class="micro-feedback" id="feedbackText" aria-live="polite">等待操作中...</p>
             </div>
 
@@ -1541,10 +1541,10 @@
     const revealElements = document.querySelectorAll(".reveal");
 
     const progressStages = [
-      { label: "当前阶段：需求理解", width: "28%" },
-      { label: "当前阶段：结构规划", width: "52%" },
-      { label: "当前阶段：交互打磨", width: "76%" },
-      { label: "当前阶段：验证与优化", width: "100%" }
+      { label: "当前阶段：null", width: "28%" },
+      { label: "当前阶段：G", width: "52%" },
+      { label: "当前阶段：GA", width: "76%" },
+      { label: "当前阶段：GAY", width: "100%" }
     ];
 
     let currentStage = 0;
@@ -1612,7 +1612,7 @@
       feedbackText.textContent = "已接收操作，正在模拟提交...";
       clearTimeout(feedbackTimer);
       feedbackTimer = setTimeout(() => {
-        feedbackText.textContent = "提交完成，系统已经给出明确反馈。";
+        feedbackText.textContent = "提交失败，你仍然是GAY。";
       }, 900);
     });
 
