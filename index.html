@@ -115,6 +115,18 @@
 
     .nav-links { justify-content: flex-end; }
 
+    .nav-toggle {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.28);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      white-space: nowrap;
+    }
+
     .nav-links a, .ghost-button, .filter-chip, .step-button {
       padding: 10px 14px;
       border-radius: 999px;
@@ -844,6 +856,10 @@
       display: none;
     }
 
+    .topbar.menu-open {
+      border-radius: 24px;
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(18px);
@@ -872,8 +888,10 @@
       }
 
       .topbar {
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: auto auto;
         align-items: center;
+        justify-content: space-between;
         gap: 10px;
         padding: 10px 12px;
         border-radius: 22px;
@@ -892,22 +910,35 @@
         display: none;
       }
 
-      .nav-links {
-        flex: 1 1 auto;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        justify-content: flex-start;
-        padding-bottom: 2px;
-        scrollbar-width: none;
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      .nav-links::-webkit-scrollbar {
+      .topbar.is-condensed .nav-toggle {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .nav-links {
         display: none;
+        grid-column: 1 / -1;
+        width: 100%;
+        margin-top: 4px;
+        padding-top: 6px;
+      }
+
+      .topbar.menu-open .nav-links {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
       }
 
       .nav-links a {
-        white-space: nowrap;
-        padding: 8px 12px;
+        width: 100%;
+        text-align: center;
+        padding: 10px 12px;
         font-size: 13px;
       }
 
@@ -931,7 +962,8 @@
           <p>把优秀人机交互设计拆开讲清楚，再现场演示给你看。</p>
         </div>
       </div>
-      <nav class="nav-links" aria-label="页面导航">
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="siteNav">展开目录</button>
+      <nav class="nav-links" id="siteNav" aria-label="页面导航">
         <a href="#teaching">教学地图</a>
         <a href="#demo">交互演示</a>
         <a href="#build">实现方法</a>
@@ -1494,6 +1526,9 @@
     const nextStep = document.getElementById("nextStep");
     const previewCard = document.getElementById("previewCard");
     const themeToggle = document.getElementById("themeToggle");
+    const navToggle = document.getElementById("navToggle");
+    const siteNav = document.getElementById("siteNav");
+    const navLinks = siteNav.querySelectorAll("a");
     const filterButtons = document.querySelectorAll(".filter-chip");
     const labButtons = document.querySelectorAll(".lab-button-trigger");
     const buttonFeedback = document.getElementById("buttonFeedback");
@@ -1559,6 +1594,20 @@
       topbar.classList.toggle("is-condensed", shouldCondense);
     }
 
+    function setMobileMenu(open) {
+      const isMobile = window.innerWidth <= 760;
+      if (!isMobile) {
+        topbar.classList.remove("menu-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.textContent = "展开目录";
+        return;
+      }
+
+      topbar.classList.toggle("menu-open", open);
+      navToggle.setAttribute("aria-expanded", String(open));
+      navToggle.textContent = open ? "收起目录" : "展开目录";
+    }
+
     feedbackButton.addEventListener("click", () => {
       feedbackText.textContent = "已接收操作，正在模拟提交...";
       clearTimeout(feedbackTimer);
@@ -1599,6 +1648,16 @@
 
     filterButtons.forEach((button) => {
       button.addEventListener("click", () => setPreviewMode(button.dataset.view));
+    });
+
+    navToggle.addEventListener("click", () => {
+      setMobileMenu(!topbar.classList.contains("menu-open"));
+    });
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        setMobileMenu(false);
+      });
     });
 
     labButtons.forEach((button) => {
@@ -1647,8 +1706,12 @@
 
     revealElements.forEach((element) => observer.observe(element));
     window.addEventListener("scroll", updateTopbarState, { passive: true });
-    window.addEventListener("resize", updateTopbarState);
+    window.addEventListener("resize", () => {
+      updateTopbarState();
+      setMobileMenu(false);
+    });
     updateTopbarState();
+    setMobileMenu(false);
   </script>
 </body>
 </html>
