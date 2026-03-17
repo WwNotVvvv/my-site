@@ -1,10 +1,1080 @@
-<!-- 创建 index.html -->
- <!DOCTYPE html>
- <html>
-    <head><title>我的第⼀个⽹站</title></head>
-    <body>
-        <h1>Hello, Vercel!</h1>
-        <h2>看到这里的是GAY<h2>
-        <p>部署时间：2026 年春季学期</p>
-    </body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HCI Frontend Studio | 前端设计教学与演示</title>
+  <style>
+    :root {
+      --surface: rgba(255, 250, 242, 0.78);
+      --surface-strong: #fffaf2;
+      --text: #1f2430;
+      --muted: #586173;
+      --line: rgba(62, 78, 101, 0.14);
+      --primary: #d6613b;
+      --primary-dark: #9c3d22;
+      --accent: #0f766e;
+      --accent-soft: rgba(15, 118, 110, 0.12);
+      --gold: #c1912d;
+      --shadow: 0 24px 80px rgba(54, 43, 20, 0.15);
+      --radius-xl: 28px;
+      --max-width: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(214, 97, 59, 0.18), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(193, 145, 45, 0.18), transparent 22%),
+        linear-gradient(180deg, #fbf6ee 0%, #f5efe5 48%, #f0eadf 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    body.theme-night {
+      --surface: rgba(24, 31, 38, 0.82);
+      --surface-strong: #202934;
+      --text: #f4efe6;
+      --muted: #b1bcc8;
+      --line: rgba(223, 214, 198, 0.12);
+      --primary: #ff8e61;
+      --primary-dark: #ffc29a;
+      --accent: #59c1b6;
+      --accent-soft: rgba(89, 193, 182, 0.16);
+      --gold: #f1c564;
+      --shadow: 0 26px 90px rgba(0, 0, 0, 0.32);
+      background:
+        radial-gradient(circle at top left, rgba(255, 142, 97, 0.18), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(89, 193, 182, 0.16), transparent 22%),
+        linear-gradient(180deg, #12181e 0%, #172026 48%, #11171c 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 72px;
+    }
+
+    .topbar, .hero-card, .lesson-card, .demo-panel, .code-card, .showcase-card, .timeline-card, .status-card, .floating-tip {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      position: sticky;
+      top: 18px;
+      z-index: 20;
+    }
+
+    .brand, .nav-links, .hero-actions, .hero-badges, .pill-row, .toolbar, .step-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand { align-items: center; gap: 14px; }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--gold));
+    }
+
+    .brand h1, .hero-copy h2, .section-head h3, .lesson-card h4, .demo-panel h4, .code-card h4, .showcase-card h4 {
+      font-family: Georgia, "Times New Roman", serif;
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .brand p, .hero-copy p, .section-head p, .lesson-card p, .showcase-card p, .code-card p, .timeline-card p, .metric p, .status-card p, .mini-note {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .nav-links { justify-content: flex-end; }
+
+    .nav-links a, .ghost-button, .filter-chip, .step-button {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.28);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .nav-links a:hover, .ghost-button:hover, .filter-chip:hover, .step-button:hover { transform: translateY(-2px); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      margin-top: 28px;
+    }
+
+    .hero-card {
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -120px auto;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(214, 97, 59, 0.23), transparent 64%);
+    }
+
+    .eyebrow, .chip, .lesson-tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    .eyebrow {
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.4);
+      color: var(--primary-dark);
+      margin-bottom: 18px;
+    }
+
+    .hero-copy h2 {
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 1;
+      margin-bottom: 18px;
+      max-width: 11ch;
+    }
+
+    .hero-copy p { font-size: 1.05rem; max-width: 56ch; }
+
+    .primary-button {
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font: inherit;
+      color: #fff7f1;
+      background: linear-gradient(135deg, var(--primary), #e58853);
+      box-shadow: 0 16px 28px rgba(214, 97, 59, 0.28);
+      transition: transform 180ms ease;
+    }
+
+    .primary-button:hover { transform: translateY(-2px); }
+
+    .ghost-button { padding: 14px 20px; background: rgba(255, 255, 255, 0.38); }
+
+    .hero-side, .showcase-stack, .canvas-card { display: grid; gap: 18px; }
+
+    .metric-grid, .lesson-grid, .showcase-grid, .timeline, .demo-layout {
+      display: grid;
+      gap: 18px;
+    }
+
+    .metric-grid { grid-template-columns: repeat(2, 1fr); }
+    .lesson-grid, .showcase-grid, .timeline { grid-template-columns: repeat(3, 1fr); }
+    .demo-layout { grid-template-columns: 1fr 0.92fr; }
+
+    .metric, .status-card, .lesson-card, .showcase-card, .demo-panel, .code-card, .timeline-card, .floating-tip { padding: 24px; }
+
+    .metric strong, .status-card strong {
+      display: block;
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: var(--primary-dark);
+    }
+
+    .pulse {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(15, 118, 110, 0.45);
+      animation: pulse 2s infinite;
+      margin-bottom: 14px;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(15, 118, 110, 0.5); }
+      70% { box-shadow: 0 0 0 14px rgba(15, 118, 110, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(15, 118, 110, 0); }
+    }
+
+    section { margin-top: 44px; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .section-head h3 {
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      margin-bottom: 8px;
+    }
+
+    .chip {
+      padding: 9px 14px;
+      background: rgba(255, 255, 255, 0.36);
+      color: var(--muted);
+    }
+
+    .lesson-card, .showcase-card, .timeline-card { position: relative; overflow: hidden; }
+
+    .lesson-card::before, .showcase-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--gold));
+    }
+
+    .lesson-tag {
+      padding: 6px 12px;
+      margin-bottom: 14px;
+      color: var(--primary-dark);
+      background: rgba(214, 97, 59, 0.08);
+    }
+
+    .lesson-card ul, .timeline-card ul {
+      padding-left: 18px;
+      margin: 16px 0 0;
+      color: var(--muted);
+    }
+
+    .demo-panel h4, .code-card h4, .timeline-card h4 { font-size: 1.5rem; margin-bottom: 6px; }
+    .toolbar { margin: 18px 0 22px; }
+
+    .filter-chip.active, .step-button.active {
+      background: var(--accent-soft);
+      border-color: rgba(15, 118, 110, 0.3);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1px rgba(15, 118, 110, 0.08);
+    }
+
+    .interactive-card {
+      border-radius: 22px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.18));
+    }
+
+    .interactive-card h5, .expand-header h5 { margin: 0 0 8px; font-size: 1.12rem; }
+    .interactive-card p, .expand-body p, .form-note, .progress-text, .micro-feedback { margin: 0; color: var(--muted); }
+
+    .primary-action {
+      margin-top: 16px;
+      border: none;
+      border-radius: 16px;
+      background: var(--primary);
+      color: white;
+      padding: 14px 18px;
+      font: inherit;
+      cursor: pointer;
+      box-shadow: 0 14px 24px rgba(214, 97, 59, 0.25);
+      transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+    }
+
+    .primary-action:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 18px 30px rgba(214, 97, 59, 0.32);
+    }
+
+    .primary-action:active {
+      transform: translateY(1px) scale(0.985);
+      filter: saturate(1.1);
+    }
+
+    .micro-feedback {
+      margin-top: 12px;
+      min-height: 24px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .progress-wrap { margin-top: 16px; }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background: rgba(88, 97, 115, 0.14);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-bar {
+      width: 28%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #6dd4cb);
+      transition: width 320ms ease;
+    }
+
+    .expand-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+
+    .expand-header {
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.26);
+    }
+
+    .expand-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 320ms ease, padding 320ms ease;
+      padding: 0 20px;
+    }
+
+    .expand-card.open .expand-body {
+      max-height: 220px;
+      padding: 0 20px 18px;
+    }
+
+    .expand-icon {
+      font-size: 1.3rem;
+      color: var(--primary-dark);
+      transition: transform 220ms ease;
+    }
+
+    .expand-card.open .expand-icon { transform: rotate(45deg); }
+
+    .demo-form { display: grid; gap: 14px; margin-top: 18px; }
+    .field { display: grid; gap: 8px; }
+    .field label { font-weight: 600; }
+
+    .field input, .field textarea {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.5);
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+      resize: vertical;
+    }
+
+    .field input:focus, .field textarea:focus {
+      border-color: rgba(214, 97, 59, 0.42);
+      box-shadow: 0 0 0 4px rgba(214, 97, 59, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .field.error input {
+      border-color: rgba(186, 53, 53, 0.55);
+      box-shadow: 0 0 0 4px rgba(186, 53, 53, 0.08);
+    }
+
+    .field.success input, .field.success textarea {
+      border-color: rgba(15, 118, 110, 0.45);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.08);
+    }
+
+    .field small { min-height: 18px; color: #b23737; }
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.26);
+    }
+
+    .toggle-switch {
+      width: 64px;
+      height: 36px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: rgba(88, 97, 115, 0.22);
+      position: relative;
+      transition: transform 180ms ease;
+    }
+
+    .toggle-switch::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: white;
+      transition: transform 220ms ease;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.14);
+    }
+
+    .toggle-switch[aria-checked="true"] { background: rgba(15, 118, 110, 0.45); }
+    .toggle-switch[aria-checked="true"]::after { transform: translateX(28px); }
+
+    .preview-window {
+      border-radius: 24px;
+      padding: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.2));
+      border: 1px solid var(--line);
+      min-height: 300px;
+    }
+
+    .preview-card {
+      border-radius: 24px;
+      padding: 22px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preview-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .preview-card.focused {
+      border-color: rgba(214, 97, 59, 0.36);
+      box-shadow: 0 24px 46px rgba(214, 97, 59, 0.15);
+    }
+
+    .preview-card.compact p:nth-of-type(2), .preview-card.compact .insight-list { display: none; }
+
+    .preview-card.expanded::after {
+      content: "进阶模式";
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(214, 97, 59, 0.1);
+      color: var(--primary-dark);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .preview-card h5 { margin: 0 0 8px; font-size: 1.25rem; }
+    .preview-card p { margin: 0 0 12px; color: var(--muted); }
+
+    .insight-list { display: grid; gap: 10px; margin-top: 12px; }
+
+    .insight {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .floating-tip {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .floating-tip strong { display: block; margin-bottom: 4px; }
+
+    .timeline-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--gold));
+    }
+
+    .timeline-index {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(15, 118, 110, 0.1);
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .footer {
+      margin-top: 44px;
+      padding: 28px 30px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.35);
+      border: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1100px) {
+      .hero, .demo-layout, .lesson-grid, .showcase-grid, .timeline { grid-template-columns: 1fr; }
+      .metric-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        width: min(var(--max-width), calc(100% - 20px));
+        padding-top: 16px;
+      }
+
+      .topbar, .section-head, .footer, .hero-actions, .toolbar, .step-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .topbar, .section-head, .footer { border-radius: 24px; }
+
+      .hero-card, .lesson-card, .demo-panel, .code-card, .showcase-card, .timeline-card, .status-card, .metric {
+        padding: 22px;
+      }
+
+      .metric-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">HCI</div>
+        <div>
+          <h1>HCI Frontend Studio</h1>
+          <p>把优秀人机交互设计拆开讲清楚，再现场演示给你看。</p>
+        </div>
+      </div>
+      <nav class="nav-links" aria-label="页面导航">
+        <a href="#teaching">教学地图</a>
+        <a href="#demo">交互演示</a>
+        <a href="#build">实现方法</a>
+        <a href="#roadmap">进阶路径</a>
+      </nav>
+    </header>
+
+    <section class="hero reveal">
+      <article class="hero-card">
+        <div class="eyebrow">前端设计教学与交互演示一体化页面</div>
+        <div class="hero-copy">
+          <h2>看见优秀设计，也学会把它做出来。</h2>
+          <p>这个页面从视觉层级、交互反馈、信息架构、表单体验、状态设计和动效策略出发，通过可点击案例带你理解“为什么这样设计”和“前端如何落地实现”。</p>
+        </div>
+        <div class="hero-actions">
+          <a class="primary-button" href="#demo">开始体验演示</a>
+          <a class="ghost-button" href="#build">直接看实现方法</a>
+        </div>
+        <div class="hero-badges" style="margin-top: 22px;">
+          <span class="chip">基础到进阶</span>
+          <span class="chip">教学 + 演示 + 代码思路</span>
+          <span class="chip">注重美观与实用性</span>
+        </div>
+      </article>
+
+      <aside class="hero-side">
+        <div class="metric-grid">
+          <article class="metric reveal">
+            <strong>6</strong>
+            <p>核心教学主题，覆盖视觉、布局、反馈、表单、动效与无障碍。</p>
+          </article>
+          <article class="metric reveal">
+            <strong>5</strong>
+            <p>可直接点击体验的交互案例，让页面本身就是一个示范课堂。</p>
+          </article>
+        </div>
+        <article class="status-card reveal">
+          <div class="pulse" aria-hidden="true"></div>
+          <strong>实时可感知反馈</strong>
+          <p>优秀交互不是“点击了什么都没发生”，而是让用户持续知道系统正在做什么、接下来能做什么。</p>
+        </article>
+      </aside>
+    </section>
+
+    <section id="teaching" class="reveal">
+      <div class="section-head">
+        <div>
+          <h3>教学地图</h3>
+          <p>从基础认知到高级体验优化，按学习曲线逐步展开。</p>
+        </div>
+        <div class="pill-row">
+          <span class="chip">基础</span>
+          <span class="chip">进阶</span>
+          <span class="chip">综合实践</span>
+        </div>
+      </div>
+
+      <div class="lesson-grid">
+        <article class="lesson-card reveal">
+          <span class="lesson-tag">基础 01</span>
+          <h4>视觉层级与可读性</h4>
+          <p>让用户一眼知道“先看哪里、再做什么”，是好界面的起点。</p>
+          <ul>
+            <li>用字号、留白、色彩和对比建立主次。</li>
+            <li>标题负责吸引，正文负责解释，按钮负责行动。</li>
+            <li>实现上优先设计排版系统和间距规则，而不是先堆组件。</li>
+          </ul>
+        </article>
+        <article class="lesson-card reveal">
+          <span class="lesson-tag">基础 02</span>
+          <h4>可供性与操作暗示</h4>
+          <p>元素要“看起来就像能点、能拖、能切换”，这会显著降低学习成本。</p>
+          <ul>
+            <li>按钮形状、阴影、光标和按压状态都在暗示操作方式。</li>
+            <li>别让纯文本伪装成交互控件。</li>
+            <li>实现时至少准备默认、悬停、按下、禁用四种状态。</li>
+          </ul>
+        </article>
+        <article class="lesson-card reveal">
+          <span class="lesson-tag">基础 03</span>
+          <h4>即时反馈与系统状态</h4>
+          <p>点击之后的微反馈，决定用户是否觉得系统可靠、流畅、可控。</p>
+          <ul>
+            <li>微动效、颜色变化、进度条和提示文案都属于反馈。</li>
+            <li>加载、成功、失败不能混在一起表达。</li>
+            <li>实现上用类名切换或状态机管理反馈最清晰。</li>
+          </ul>
+        </article>
+        <article class="lesson-card reveal">
+          <span class="lesson-tag">进阶 01</span>
+          <h4>渐进披露与认知减负</h4>
+          <p>不是所有信息都要一次性塞给用户，分阶段呈现更符合认知规律。</p>
+          <ul>
+            <li>先展示关键行动，再按需展开解释和高级选项。</li>
+            <li>折叠面板、分步向导、抽屉层都属于渐进披露。</li>
+            <li>实现时注意展开前后布局和焦点管理。</li>
+          </ul>
+        </article>
+        <article class="lesson-card reveal">
+          <span class="lesson-tag">进阶 02</span>
+          <h4>表单体验与错误预防</h4>
+          <p>好的表单不是“出错后批评用户”，而是提前帮助用户成功完成任务。</p>
+          <ul>
+            <li>字段标签清楚、输入状态明确、错误提示具体。</li>
+            <li>错误信息应该说明问题和修正方法。</li>
+            <li>实现上把校验拆成实时提醒和提交校验两层。</li>
+          </ul>
+        </article>
+        <article class="lesson-card reveal">
+          <span class="lesson-tag">综合实践</span>
+          <h4>一致性、动效与无障碍</h4>
+          <p>高级体验来自多个维度共同工作，而不是某一个炫酷组件。</p>
+          <ul>
+            <li>一致的颜色、圆角、间距和反馈机制会建立产品可信度。</li>
+            <li>动效要服务理解，而不是制造干扰。</li>
+            <li>实现时加入键盘可达性、语义标签和对比度意识。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="demo" class="reveal">
+      <div class="section-head">
+        <div>
+          <h3>交互演示区</h3>
+          <p>这里的每个模块都能点击体验，同时对应一个人机交互原则。</p>
+        </div>
+        <div class="pill-row">
+          <span class="chip">可点击</span>
+          <span class="chip">有状态变化</span>
+          <span class="chip">能学实现思路</span>
+        </div>
+      </div>
+
+      <div class="demo-layout">
+        <article class="demo-panel reveal">
+          <h4>优秀交互的五个现场示范</h4>
+          <p>先体验，再回头看页面右侧的讲解和实现逻辑，你会更容易理解设计为什么有效。</p>
+
+          <div class="toolbar" aria-label="预览控制">
+            <button class="filter-chip active" data-view="focused">强调焦点</button>
+            <button class="filter-chip" data-view="compact">减少干扰</button>
+            <button class="filter-chip" data-view="expanded">展示更多</button>
+          </div>
+
+          <div class="showcase-stack">
+            <div class="interactive-card">
+              <h5>1. 点击反馈示范</h5>
+              <p>点击主按钮后，系统立刻给出“动作已被接收”的反馈，而不是让用户猜。</p>
+              <button class="primary-action" id="feedbackButton">点击体验按钮反馈</button>
+              <p class="micro-feedback" id="feedbackText" aria-live="polite">等待操作中...</p>
+            </div>
+
+            <div class="interactive-card">
+              <h5>2. 渐进披露示范</h5>
+              <p>优先展示结果导向信息，需要时再展开原理说明。</p>
+              <div class="expand-card" id="expandCard">
+                <div class="expand-header" id="expandHeader" role="button" tabindex="0" aria-expanded="false" aria-controls="expandBody">
+                  <div>
+                    <h5>展开查看“为什么渐进披露有效”</h5>
+                    <p class="mini-note">点击后显示更深入的解释与实现要点。</p>
+                  </div>
+                  <div class="expand-icon">+</div>
+                </div>
+                <div class="expand-body" id="expandBody">
+                  <p>当用户刚进入页面时，最需要的是方向感和行动入口，而不是所有细节。先展示关键内容，再按需展开，会让界面更轻、更易学，也更适合复杂系统。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="interactive-card">
+              <h5>3. 表单与错误预防示范</h5>
+              <p>尝试输入过短的姓名，看看页面如何给出具体而友好的提示。</p>
+              <form class="demo-form" id="demoForm" novalidate>
+                <div class="field" id="nameField">
+                  <label for="nameInput">姓名</label>
+                  <input id="nameInput" name="name" type="text" placeholder="至少输入 2 个字符">
+                  <small id="nameHint"></small>
+                </div>
+                <div class="field" id="ideaField">
+                  <label for="ideaInput">设计目标</label>
+                  <textarea id="ideaInput" name="idea" rows="3" placeholder="例如：希望主页更清晰、更有反馈感"></textarea>
+                </div>
+                <button class="ghost-button" type="submit">提交体验</button>
+                <p class="form-note" id="formMessage" aria-live="polite">表单尚未提交。</p>
+              </form>
+            </div>
+
+            <div class="interactive-card">
+              <h5>4. 系统状态与进度示范</h5>
+              <p>点击推进进度，感受“用户知道自己到哪一步了”带来的安全感。</p>
+              <div class="step-controls">
+                <button class="step-button" id="prevStep">上一步</button>
+                <button class="step-button active" id="nextStep">下一步</button>
+              </div>
+              <div class="progress-wrap">
+                <p class="progress-text" id="progressText">当前阶段：需求理解</p>
+                <div class="progress-track" aria-hidden="true">
+                  <div class="progress-bar" id="progressBar"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="interactive-card">
+              <h5>5. 主题切换与环境适配示范</h5>
+              <p>主题切换不仅是外观变化，也是环境适配与持续可读性的设计策略。</p>
+              <div class="toggle-row">
+                <div>
+                  <strong>夜间专注模式</strong>
+                  <p class="mini-note">演示统一主题变量如何提升可维护性。</p>
+                </div>
+                <button class="toggle-switch" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="切换夜间模式"></button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <aside class="code-card reveal">
+          <h4>右侧预览与讲解</h4>
+          <p>左侧操作会影响这里的展示状态，帮助你把“交互变化”与“设计原则”对应起来。</p>
+          <div class="canvas-card">
+            <div class="preview-window">
+              <div class="preview-card focused" id="previewCard">
+                <h5>课程卡片预览</h5>
+                <p>这是一个用于演示视觉层级、反馈和信息组织的示例卡片。</p>
+                <p>当你切换不同模式时，卡片会分别强调焦点、减少次要信息或展开更多说明。</p>
+                <div class="insight-list">
+                  <div class="insight">层级：标题、摘要、行动提示分层清晰</div>
+                  <div class="insight">反馈：悬停与切换带来可感知变化</div>
+                  <div class="insight">认知：先重点，后细节，避免信息拥堵</div>
+                </div>
+              </div>
+            </div>
+            <div class="floating-tip">
+              <div style="font-size: 1.5rem;">i</div>
+              <div>
+                <strong>实现提示</strong>
+                <p>用类名切换预览状态，是把设计逻辑转成前端实现的高性价比方式。</p>
+              </div>
+            </div>
+            <div class="showcase-grid">
+              <article class="showcase-card">
+                <h4>反馈设计</h4>
+                <p>让每次点击都对应一个明确结果，减少不确定性。</p>
+              </article>
+              <article class="showcase-card">
+                <h4>渐进信息</h4>
+                <p>把复杂内容拆成可吸收的层次，减轻认知负担。</p>
+              </article>
+              <article class="showcase-card">
+                <h4>主题系统</h4>
+                <p>用设计变量统一色彩与界面风格，兼顾美观和维护性。</p>
+              </article>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="build" class="reveal">
+      <div class="section-head">
+        <div>
+          <h3>如何实现这些设计</h3>
+          <p>把概念变成代码时，建议从结构、状态、反馈、规范四层来落地。</p>
+        </div>
+        <div class="pill-row">
+          <span class="chip">HTML 结构</span>
+          <span class="chip">CSS 变量</span>
+          <span class="chip">JavaScript 状态切换</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <article class="timeline-card reveal">
+          <div class="timeline-index">01</div>
+          <h4>先搭信息结构</h4>
+          <p>用语义化标签把页面分成 hero、教学区、演示区、方法区和总结区。结构清楚，样式与交互才不会混乱。</p>
+          <ul>
+            <li>页面先按“学习流程”而非“组件类型”组织。</li>
+            <li>关键按钮、标题和卡片要在 DOM 中有明确语义。</li>
+          </ul>
+        </article>
+        <article class="timeline-card reveal">
+          <div class="timeline-index">02</div>
+          <h4>再建视觉系统</h4>
+          <p>用 CSS 变量统一颜色、圆角、阴影和间距，让主题切换、组件复用和视觉一致性变得简单。</p>
+          <ul>
+            <li>把主色、强调色、文本色和背景色抽成变量。</li>
+            <li>统一定义卡片半径和阴影，避免界面风格飘忽。</li>
+          </ul>
+        </article>
+        <article class="timeline-card reveal">
+          <div class="timeline-index">03</div>
+          <h4>最后接入状态逻辑</h4>
+          <p>所有“点击后变化”的演示，都可以归结为状态切换：类名变化、文本变化、宽度变化、无障碍属性变化。</p>
+          <ul>
+            <li>按钮反馈更新文案。</li>
+            <li>折叠面板更新 `aria-expanded`。</li>
+            <li>表单校验同步状态类名和提示文本。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="roadmap" class="reveal">
+      <div class="section-head">
+        <div>
+          <h3>从入门到进阶的学习路线</h3>
+          <p>如果你要继续深入人机交互与前端设计实现，可以按这条路径练习。</p>
+        </div>
+        <div class="pill-row">
+          <span class="chip">循序渐进</span>
+          <span class="chip">可操作</span>
+          <span class="chip">适合继续扩展</span>
+        </div>
+      </div>
+
+      <div class="lesson-grid">
+        <article class="lesson-card reveal">
+          <span class="lesson-tag">阶段 A</span>
+          <h4>先练排版与层级</h4>
+          <p>临摹优秀页面，练习标题、正文、按钮与卡片之间的主次关系。</p>
+        </article>
+        <article class="lesson-card reveal">
+          <span class="lesson-tag">阶段 B</span>
+          <h4>再练状态与反馈</h4>
+          <p>为每个控件补齐 hover、active、focus、disabled 与 success/error 状态。</p>
+        </article>
+        <article class="lesson-card reveal">
+          <span class="lesson-tag">阶段 C</span>
+          <h4>最后练完整任务流</h4>
+          <p>尝试做注册、搜索、下单、表单填写等完整流程，关注引导、错误预防和完成反馈。</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer reveal">
+      <div>
+        <strong>页面目标</strong>
+        <p class="mini-note">把“优秀的人机交互设计”做成既能学习又能上手体验的前端网页。</p>
+      </div>
+      <div>
+        <strong>你可以继续扩展</strong>
+        <p class="mini-note">加入更多案例，如拖拽排序、对话式引导、无障碍键盘导航演示等。</p>
+      </div>
+    </footer>
+  </div>
+  <script>
+    const feedbackButton = document.getElementById("feedbackButton");
+    const feedbackText = document.getElementById("feedbackText");
+    const expandCard = document.getElementById("expandCard");
+    const expandHeader = document.getElementById("expandHeader");
+    const demoForm = document.getElementById("demoForm");
+    const nameInput = document.getElementById("nameInput");
+    const ideaInput = document.getElementById("ideaInput");
+    const nameField = document.getElementById("nameField");
+    const ideaField = document.getElementById("ideaField");
+    const nameHint = document.getElementById("nameHint");
+    const formMessage = document.getElementById("formMessage");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    const prevStep = document.getElementById("prevStep");
+    const nextStep = document.getElementById("nextStep");
+    const previewCard = document.getElementById("previewCard");
+    const themeToggle = document.getElementById("themeToggle");
+    const filterButtons = document.querySelectorAll(".filter-chip");
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const progressStages = [
+      { label: "当前阶段：需求理解", width: "28%" },
+      { label: "当前阶段：结构规划", width: "52%" },
+      { label: "当前阶段：交互打磨", width: "76%" },
+      { label: "当前阶段：验证与优化", width: "100%" }
+    ];
+
+    let currentStage = 0;
+    let feedbackTimer = null;
+
+    function setPreviewMode(mode) {
+      previewCard.classList.remove("focused", "compact", "expanded");
+      previewCard.classList.add(mode);
+      filterButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.view === mode);
+      });
+    }
+
+    function toggleExpand() {
+      const isOpen = expandCard.classList.toggle("open");
+      expandHeader.setAttribute("aria-expanded", String(isOpen));
+    }
+
+    function validateName() {
+      const value = nameInput.value.trim();
+      if (!value) {
+        nameField.classList.remove("success");
+        nameField.classList.add("error");
+        nameHint.textContent = "请输入姓名，这样系统才能知道如何称呼你。";
+        return false;
+      }
+      if (value.length < 2) {
+        nameField.classList.remove("success");
+        nameField.classList.add("error");
+        nameHint.textContent = "姓名至少输入 2 个字符，提示越明确越有帮助。";
+        return false;
+      }
+      nameField.classList.remove("error");
+      nameField.classList.add("success");
+      nameHint.textContent = "";
+      return true;
+    }
+
+    function updateProgress(stepChange) {
+      currentStage = Math.min(progressStages.length - 1, Math.max(0, currentStage + stepChange));
+      progressBar.style.width = progressStages[currentStage].width;
+      progressText.textContent = progressStages[currentStage].label;
+    }
+
+    feedbackButton.addEventListener("click", () => {
+      feedbackText.textContent = "已接收操作，正在模拟提交...";
+      clearTimeout(feedbackTimer);
+      feedbackTimer = setTimeout(() => {
+        feedbackText.textContent = "提交完成，反馈已同步给用户。";
+      }, 900);
+    });
+
+    expandHeader.addEventListener("click", toggleExpand);
+    expandHeader.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleExpand();
+      }
+    });
+
+    nameInput.addEventListener("input", validateName);
+
+    ideaInput.addEventListener("input", () => {
+      ideaField.classList.toggle("success", ideaInput.value.trim().length > 0);
+    });
+
+    demoForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const validName = validateName();
+      if (!ideaInput.value.trim()) {
+        ideaField.classList.remove("success");
+      }
+      if (!validName) {
+        formMessage.textContent = "表单未提交成功，请先修正高亮字段。";
+        return;
+      }
+      formMessage.textContent = "提交成功：这就是“清晰输入 + 明确反馈”的体验。";
+    });
+
+    prevStep.addEventListener("click", () => updateProgress(-1));
+    nextStep.addEventListener("click", () => updateProgress(1));
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => setPreviewMode(button.dataset.view));
+    });
+
+    themeToggle.addEventListener("click", () => {
+      const isNight = document.body.classList.toggle("theme-night");
+      themeToggle.setAttribute("aria-checked", String(isNight));
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16 });
+
+    revealElements.forEach((element) => observer.observe(element));
+  </script>
+</body>
 </html>
